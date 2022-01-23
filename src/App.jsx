@@ -1,8 +1,38 @@
+/* eslint-disable no-restricted-globals */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react'
 
 import { ballProps, leftPaddleProps } from './data'
 import './styles.css'
+
+// addEventListener('mousemove', (e) => {
+//   leftPaddleProps.y = e.clientY
+// })
+
+// addEventListener(
+//   'touchmove',
+//   (e) => {
+//     e.preventDefault()
+//     leftPaddleProps.y =
+//       e.touches[0].clientY + leftPaddleProps.height >= 600
+//         ? e.touches[0].clientY - leftPaddleProps.height
+//         : e.touches[0].clientY
+//   },
+//   { passive: false }
+// )
+document.onkeydown = checkKey
+
+function checkKey(e) {
+  e = e || window.event
+
+  // up arrow
+  if (e.keyCode == '38' && leftPaddleProps.y >= 0)
+    leftPaddleProps.y -= leftPaddleProps.speed
+
+  // down arrow
+  if (e.keyCode == '40' && leftPaddleProps.y + leftPaddleProps.height <= 600)
+    leftPaddleProps.y += leftPaddleProps.speed
+}
 
 function App() {
   useEffect(() => {
@@ -31,6 +61,21 @@ function App() {
   }
 
   function drawBall(ctx) {
+    ballProps.x += ballProps.speedX
+    ballProps.y += ballProps.speedY
+
+    const ballTouchesLeftPaddle =
+      ballProps.x - ballProps.size <=
+        leftPaddleProps.x + leftPaddleProps.width &&
+      ballProps.y + ballProps.size <=
+        leftPaddleProps.y + leftPaddleProps.height &&
+      ballProps.y >= leftPaddleProps.y
+
+    const ballTouchesLeftSide = ballProps.x - ballProps.size <= 0
+
+    const ballTouchesRightSide =
+      ballProps.x + ballProps.size >= ctx.canvas.width
+
     ctx.beginPath()
     ctx.arc(
       ballProps.x + ballProps.speedX,
@@ -43,12 +88,7 @@ function App() {
     ctx.fill()
     ctx.closePath()
 
-    ballProps.x += ballProps.speedX
-    ballProps.y += ballProps.speedY
-    if (
-      ballProps.x + ballProps.size >= ctx.canvas.width ||
-      ballProps.x - ballProps.size <= 0
-    )
+    if (ballTouchesLeftSide || ballTouchesRightSide || ballTouchesLeftPaddle)
       ballProps.speedX *= -1
     if (
       ballProps.y + ballProps.size >= ctx.canvas.height ||
@@ -68,12 +108,14 @@ function App() {
     ctx.fillStyle = '#eeeeee'
     ctx.closePath()
 
-    leftPaddleProps.y += leftPaddleProps.speed
-    if (
-      leftPaddleProps.y + leftPaddleProps.height >= ctx.canvas.height ||
-      leftPaddleProps.y <= 0
-    )
-      leftPaddleProps.speed *= -1
+    // leftPaddleProps.y += leftPaddleProps.speed
+
+    // TODO: REMOVE THIS LATER
+    // if (
+    //   leftPaddleProps.y + leftPaddleProps.height >= ctx.canvas.height ||
+    //   leftPaddleProps.y <= 0
+    // )
+    //   leftPaddleProps.speed *= -1
   }
 
   return (

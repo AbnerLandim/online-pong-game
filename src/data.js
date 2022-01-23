@@ -1,4 +1,3 @@
-/* eslint-disable import/no-anonymous-default-export */
 export const ballProps = {
   size: 8,
   x: 264,
@@ -8,9 +7,9 @@ export const ballProps = {
 }
 
 export const leftPaddleProps = {
-  height: 36,
+  height: 264,
   width: 8,
   x: 36,
   y: 282,
-  speed: 7,
+  speed: 25,
 }

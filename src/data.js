@@ -7,9 +7,9 @@ export const ballProps = {
 }
 
 export const leftPaddleProps = {
-  height: 264,
+  height: 64,
   width: 8,
   x: 36,
   y: 282,
-  speed: 25,
+  speed: 50,
 }

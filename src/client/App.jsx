@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 
 import { drawBall } from './components/Ball'
 import { drawLeftPaddle, checkKey } from './components/LeftPaddle'
+import socket from './services/socket'
 import './styles.css'
 
 document.onkeydown = checkKey
@@ -22,6 +23,12 @@ function App() {
     }
 
     render()
+
+    socket.emit('message', `here's a message from client ${socket.id} ${score}`)
+    socket.on('message', (msg) => {
+      console.log('msg ->', msg)
+      // this line sends data to server
+    })
 
     return () => {
       window.cancelAnimationFrame(animationFrameId)

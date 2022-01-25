@@ -11,5 +11,5 @@ export const leftPaddleProps = {
   width: 8,
   x: 36,
   y: 282,
-  speed: 50,
+  speed: 55,
 }

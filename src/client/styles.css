@@ -39,8 +39,8 @@ h2 {
   display: flex;
   align-items: center;
   border: 1px solid;
-  max-height: 4rem;
-  width: 600px;
+  height: 4rem;
+  width: 36rem;
   padding: 2rem;
   border-radius: 0.25rem;
   margin-top: 4rem;

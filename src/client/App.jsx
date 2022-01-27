@@ -11,6 +11,7 @@ document.onkeydown = checkKey
 
 function App() {
   const [score, setScore] = useState(0)
+  const roomName = window.location.pathname.split('/play/')[1]
 
   useEffect(() => {
     const board = document.getElementById('board')
@@ -24,8 +25,10 @@ function App() {
 
     render()
 
-    socket.emit('message', `here's a message from client ${socket.id} ${score}`)
-    socket.on('message', (msg) => {
+    // socket.join(roomName)
+
+    socket.emit(roomName, `here's my score -> ${score}`)
+    socket.on(roomName, (msg) => {
       console.log('msg ->', msg)
       // this line sends data to server
     })
